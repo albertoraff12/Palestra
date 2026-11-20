@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Allenamenti">
+<meta name="theme-color" content="#e9f0f5">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<title>Allenamenti</title>
+<style>
+:root{--tx:#111214;--mu:rgba(60,60,67,.62);--ac:#0a8f7a;--gl:rgba(255,255,255,.52);--gb:rgba(255,255,255,.75);--sh:0 8px 32px rgba(40,60,120,.14);--dg:#d93025;--bg:#e9f0f5;--b1:#dce8e6;--b2:#e1e5f0;--b3:#ece4e8;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--tx:#f2f2f5;--mu:rgba(235,235,245,.6);--ac:#4fd1b5;--gl:rgba(44,44,52,.5);--gb:rgba(255,255,255,.16);--sh:0 8px 32px rgba(0,0,0,.45);--dg:#ff8a80;--bg:#0b0b0e;--b1:#1a2a27;--b2:#1e2236;--b3:#2a1f26;color-scheme:dark}}
+:root[data-theme="dark"]{--tx:#f2f2f5;--mu:rgba(235,235,245,.6);--ac:#4fd1b5;--gl:rgba(44,44,52,.5);--gb:rgba(255,255,255,.16);--sh:0 8px 32px rgba(0,0,0,.45);--dg:#ff8a80;--bg:#0b0b0e;--b1:#1a2a27;--b2:#1e2236;--b3:#2a1f26;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;color:var(--tx);font:16px/1.4 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;background:transparent}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(60% 40% at 12% 8%,var(--b1),transparent 70%),radial-gradient(55% 40% at 95% 22%,var(--b2),transparent 70%),radial-gradient(65% 45% at 65% 98%,var(--b3),transparent 70%),var(--bg)}
+main{max-width:560px;margin:0 auto;padding:18px 16px 170px}
+.glass{background:var(--gl);-webkit-backdrop-filter:blur(26px) saturate(180%);backdrop-filter:blur(26px) saturate(180%);border:1px solid var(--gb);box-shadow:var(--sh),inset 0 1px 0 var(--gb);border-radius:24px}
+h1{font-size:32px;line-height:1.1;margin:6px 4px 4px;letter-spacing:-.5px}
+.sub{margin:0 4px 16px;color:var(--mu);font-size:15px}
+.pbar{height:6px;border-radius:3px;background:var(--gb);margin:0 4px 16px;overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--ac);border-radius:3px;transition:width .3s}
+.card{padding:4px 16px;margin-bottom:14px}
+.ex{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--gb)}
+.ex:last-child{border-bottom:0}
+.ex input[type=checkbox]{appearance:none;-webkit-appearance:none;flex:0 0 auto;width:30px;height:30px;margin:1px 0 0;border-radius:50%;border:2px solid var(--mu);background:transparent;position:relative;cursor:pointer}
+.ex input[type=checkbox]:checked{background:var(--ac);border-color:var(--ac)}
+.ex input[type=checkbox]:checked::after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-weight:700;font-size:17px}
+.col{flex:1;min-width:0}
+.n{font-weight:600;font-size:17px}
+.s{font-size:14px;color:var(--mu);margin-top:2px}
+.ex.done .t{opacity:.45}
+.ex.done .n{text-decoration:line-through}
+.ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.ld{width:112px;border:1px solid var(--gb);background:var(--gb);color:var(--tx);border-radius:12px;padding:8px 10px;font:inherit;font-size:16px}
+.pv{font-size:13px;color:var(--mu)}
+.pv:empty{display:none}
+.tm{border:0;background:var(--ac);color:#fff;border-radius:999px;padding:8px 14px;font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+.bar{display:flex;gap:10px;margin-bottom:14px}
+.btn{flex:1;border:1px solid var(--gb);background:var(--gl);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);color:var(--tx);padding:13px;border-radius:16px;font:inherit;font-size:16px;font-weight:600;cursor:pointer}
+.btn.pri{background:var(--ac);color:#fff;border-color:var(--ac)}
+.btn.del{color:var(--dg);flex:0 0 auto;padding:10px 14px}
+.btn.sm{flex:0 0 auto;padding:8px 12px}
+.ed{display:flex;flex-direction:column;gap:8px;flex:1;min-width:0}
+.side{display:flex;flex-direction:column;gap:6px}
+input[type=text],textarea{width:100%;border:1px solid var(--gb);background:var(--gb);color:var(--tx);border-radius:12px;padding:11px 12px;font:inherit;font-size:16px}
+textarea{min-height:120px;resize:vertical}
+.empty{color:var(--mu);padding:22px 0;text-align:center}
+h2{font-size:22px;margin:22px 4px 10px;letter-spacing:-.3px}
+.tips{padding-left:20px;margin:10px 0}
+.tips li{margin:10px 0}
+.note{padding:14px 0;border-bottom:1px solid var(--gb)}
+.note:last-child{border-bottom:0}
+.note .d{font-size:13px;color:var(--mu);display:flex;justify-content:space-between;align-items:center}
+.note p{margin:6px 0 0;white-space:pre-wrap}
+#tabs{position:fixed;left:14px;right:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);max-width:532px;margin:0 auto;display:flex;padding:6px;border-radius:999px;z-index:20}
+#tabs button{flex:1;border:0;background:transparent;color:var(--mu);padding:12px 4px;border-radius:999px;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+#tabs button.on{background:var(--gb);color:var(--ac);box-shadow:inset 0 1px 0 var(--gb)}
+#tmr{position:fixed;left:14px;right:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 78px);max-width:532px;margin:0 auto;padding:12px 14px;z-index:21;display:flex;align-items:center;gap:10px;overflow:hidden}
+#tmr[hidden]{display:none}
+#tmr.fin{box-shadow:0 0 0 3px var(--ac),var(--sh)}
+#tmr .tx{flex:1;min-width:0}
+#tn2{font-size:13px;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tt{font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1}
+#tmr .b{border:0;background:var(--gb);color:var(--tx);width:42px;height:42px;border-radius:50%;font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+#tg{position:absolute;left:0;bottom:0;height:4px;background:var(--ac)}
+</style>
+</head>
+<body>
+<main><div id="view"></div></main>
+<div id="tmr" class="glass" hidden>
+<div class="tx"><div id="tn2"></div><div id="tt">0:00</div></div>
+<button class="b" id="tm1">−15</button><button class="b" id="tm2">+15</button><button class="b" id="tp">⏸</button><button class="b" id="tx">✕</button>
+<div id="tg"></div></div>
+<nav id="tabs" class="glass"></nav>
+<script>
+var KEY="allenamenti-v1";
+var DEF={tabs:[
+{name:"Scheda A · Gambe",ex:[
+["Riscaldamento","3 min di cyclette facile, mobilità di caviglie e anche, 2 serie leggere del primo esercizio","Quanto serve"],
+["Squat con manubrio al petto oppure pressa","3 × 10","60 sec"],
+["Stacco rumeno con manubri","3 × 10","60 sec"],
+["Affondo statico con appoggio con pesi","2 × 8 per gamba","60–75 sec dopo entrambe le gambe"],
+["Leg curl","2 × 10–12","45 sec dopo la coppia"],
+["Polpacci","2 × 12–15","45 sec"],
+["Plank laterale + dead bug","2 giri: 20–30 sec per lato + 6–8 per lato","20–30 sec tra esercizi"],
+["Defaticamento","Camminata facile e mobilità leggera","—"]]},
+{name:"Scheda B · Parte superiore del corpo",ex:[
+["Riscaldamento","3 min di cyclette, movimenti controllati delle spalle, 1–2 serie leggere di spinte e rematore","Quanto serve"],
+["Spinte con manubri su panca piana","3 × 10","45 sec"],
+["Lat machine + spinte con manubri da seduto sopra la testa","3 × 8–10 + 3 × 8–10","45 sec tra esercizi, poi 60 sec dopo la coppia"],
+["Curl con manubri + estensioni tricipiti al cavo","2 × 10–12 ciascuno","60 sec dopo la coppia"],
+["Alzate laterali + Pallof press al cavo","2 × 12–15 + 2 × 10 per lato","45 sec dopo la coppia"],
+["Defaticamento","Camminata e mobilità leggera delle spalle","—"]]},
+{name:"Scheda C",ex:[]}
+].map(function(t,i){return{name:t.name,ex:t.ex.map(function(e,j){return{id:"d"+i+j,n:e[0],s:e[1],r:e[2],done:false}})}}),notes:[]};
+function mig(s){if(s.tabs[1]&&s.tabs[1].name==="Scheda B · Parte superiore")s.tabs[1].name=DEF.tabs[1].name;if(s.tabs[2]&&s.tabs[2].name==="Scheda C · Libera")s.tabs[2].name="Scheda C";return s}
+function load(){try{var s=localStorage.getItem(KEY);if(s)return mig(JSON.parse(s))}catch(e){}return JSON.parse(JSON.stringify(DEF))}
+var state=load(),cur=0,editing=false,ref=null,timer=null,T=null,AC=null;
+function save(){clearTimeout(timer);timer=setTimeout(function(){var j=JSON.stringify(state);try{localStorage.setItem(KEY,j)}catch(e){}if(ref){ref.set({json:j}).catch(function(){})}},400)}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function uid(){return "x"+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function secs(r){var m=/(\d+)/.exec(r||"");return m?+m[1]:0}
+function noLoad(n){return /^(Riscaldamento|Defaticamento)$/.test(n)}
+function nav(){var l=["Scheda A","Scheda B","Scheda C","Note"],h="";l.forEach(function(x,i){h+='<button class="'+(cur===i?"on":"")+'" data-t="'+i+'">'+x+"</button>"});var n=document.getElementById("tabs");n.innerHTML=h;n.querySelectorAll("button").forEach(function(b){b.onclick=function(){cur=+b.dataset.t;editing=false;render();window.scrollTo(0,0)}})}
+function render(){nav();var v=document.getElementById("view");if(cur===3)return diary(v);var t=state.tabs[cur];var done=t.ex.filter(function(e){return e.done}).length;
+var h=editing?'<input type="text" id="tn" value="'+esc(t.name)+'" style="font-size:22px;font-weight:700;margin:6px 0 14px">':'<h1>'+esc(t.name)+'</h1><p class="sub">'+done+" di "+t.ex.length+' completati</p><div class="pbar"><i style="width:'+(t.ex.length?done/t.ex.length*100:0)+'%"></i></div>';
+h+='<div class="card glass">';
+if(!t.ex.length)h+='<div class="empty">Nessun esercizio. Premi “Modifica” per aggiungerne.</div>';
+t.ex.forEach(function(e,i){
+if(editing)h+='<div class="ex"><div class="ed"><input type="text" data-f="n" data-i="'+i+'" value="'+esc(e.n)+'" placeholder="Esercizio"><input type="text" data-f="s" data-i="'+i+'" value="'+esc(e.s)+'" placeholder="Serie × ripetizioni"><input type="text" data-f="r" data-i="'+i+'" value="'+esc(e.r)+'" placeholder="Recupero"></div><div class="side"><button class="btn sm" data-up="'+i+'">↑</button><button class="btn sm" data-dn="'+i+'">↓</button><button class="btn sm del" data-rm="'+i+'">✕</button></div></div>';
+else{var sc=secs(e.r),nl=noLoad(e.n);
+h+='<div class="ex'+(e.done?" done":"")+'"><input type="checkbox" data-c="'+i+'"'+(e.done?" checked":"")+'><div class="col"><div class="t" data-tg="'+i+'"><div class="n">'+esc(e.n)+'</div><div class="s">'+esc(e.s)+(e.r?" · Recupero: "+esc(e.r):"")+'</div></div>';
+if(!nl||sc){h+='<div class="ctl">';if(!nl)h+='<input class="ld" type="text" data-w="'+i+'" value="'+esc(e.w||"")+'" placeholder="Carico" enterkeyhint="done"><span class="pv">'+(e.p?"Prima: "+esc(e.p):"")+'</span>';if(sc)h+='<button class="tm" data-tm="'+i+'">⏱ '+sc+'″</button>';h+='</div>'}
+h+='</div></div>'}});
+h+='</div><div class="bar">';
+if(editing)h+='<button class="btn" id="add">+ Aggiungi esercizio</button><button class="btn pri" id="ok">Fatto</button>';
+else h+='<button class="btn" id="ed">Modifica</button><button class="btn" id="rs">Azzera spunte</button>';
+v.innerHTML=h+"</div>";
+var $=function(s){return v.querySelector(s)},tg=function(i){t.ex[i].done=!t.ex[i].done;save();render()};
+v.querySelectorAll("[data-c]").forEach(function(c){c.onchange=function(){tg(+c.dataset.c)}});
+v.querySelectorAll("[data-tg]").forEach(function(c){c.onclick=function(){tg(+c.dataset.tg)}});
+v.querySelectorAll("[data-w]").forEach(function(c){c.onchange=function(){var e=t.ex[+c.dataset.w],nv=c.value.trim();if(nv!==(e.w||"")){if(e.w)e.p=e.w;e.w=nv;var p=c.parentNode.querySelector(".pv");p.textContent=e.p?"Prima: "+e.p:""}save()}});
+v.querySelectorAll("[data-tm]").forEach(function(b){b.onclick=function(){var e=t.ex[+b.dataset.tm];start(secs(e.r),e.n)}});
+v.querySelectorAll("input[data-f]").forEach(function(c){c.oninput=function(){t.ex[+c.dataset.i][c.dataset.f]=c.value;save()}});
+v.querySelectorAll("[data-rm]").forEach(function(b){b.onclick=function(){t.ex.splice(+b.dataset.rm,1);save();render()}});
+v.querySelectorAll("[data-up]").forEach(function(b){b.onclick=function(){var i=+b.dataset.up;if(i>0){t.ex.splice(i-1,0,t.ex.splice(i,1)[0]);save();render()}}});
+v.querySelectorAll("[data-dn]").forEach(function(b){b.onclick=function(){var i=+b.dataset.dn;if(i<t.ex.length-1){t.ex.splice(i+1,0,t.ex.splice(i,1)[0]);save();render()}}});
+if($("#tn"))$("#tn").oninput=function(){t.name=this.value||"Scheda";save()};
+if($("#add"))$("#add").onclick=function(){t.ex.push({id:uid(),n:"",s:"",r:"",done:false});save();render()};
+if($("#ok"))$("#ok").onclick=function(){editing=false;render()};
+if($("#ed"))$("#ed").onclick=function(){editing=true;render()};
+if($("#rs"))$("#rs").onclick=function(){t.ex.forEach(function(e){e.done=false});save();render()}}
+function diary(v){
+var tips=["<b>Carico iniziale:</b> termina ogni serie sentendo che potresti fare ancora 2–3 ripetizioni pulite. Non serve arrivare al cedimento per ottenere risultati.","<b>Prime due settimane:</b> negli esercizi indicati da 3 serie, fanne solo 2. Usa il tempo restante per imparare i movimenti e recuperare.","<b>Progressione:</b> quando raggiungi il limite alto delle ripetizioni in tutte le serie, con tecnica stabile e margine, aumenta il peso del minimo disponibile e riparti dal limite basso.","<b>Organizzazione:</b> separa le due sedute di almeno un giorno e, inizialmente, evita la scheda gambe nelle 48 ore prima di ripetute, corsa lunga o uscita impegnativa in bici. Adatta poi la distanza in base al recupero.","<b>Dolore:</b> se senti dolore articolare o tendineo, interrompi quell’esercizio: non cercare di “sbloccarlo” aumentando il carico. Se persiste, serve una valutazione.","<b>Da sapere:</b> con questa divisione ogni distretto riceve una sola seduta diretta a settimana. È un punto di partenza pratico, ma per sviluppare al massimo la forza generale le indicazioni attuali privilegiano il lavoro dei principali gruppi muscolari almeno due volte a settimana."];
+var h='<h1>Note</h1><p class="sub">Il tuo diario di allenamento</p><div class="card glass" style="padding:14px"><textarea id="nt" placeholder="Come è andato l’allenamento? Sensazioni, cosa cambiare…"></textarea><div class="bar" style="margin:10px 0 0"><button class="btn pri" id="sv">Salva nota</button></div></div><div class="card glass">';
+if(!state.notes.length)h+='<div class="empty">Ancora nessuna nota.</div>';
+state.notes.forEach(function(n,i){h+='<div class="note"><div class="d"><span>'+esc(n.d)+'</span><button class="btn sm del" data-dn="'+i+'">Elimina</button></div><p>'+esc(n.t)+'</p></div>'});
+h+='</div><h2>Consigli</h2><div class="card glass"><ul class="tips">';
+tips.forEach(function(t){h+="<li>"+t+"</li>"});
+v.innerHTML=h+"</ul></div>";
+v.querySelector("#sv").onclick=function(){var x=v.querySelector("#nt").value.trim();if(!x)return;state.notes.unshift({d:new Date().toLocaleDateString("it-IT",{weekday:"long",day:"numeric",month:"long",year:"numeric"}),t:x});save();diary(v)};
+v.querySelectorAll("[data-dn]").forEach(function(b){b.onclick=function(){state.notes.splice(+b.dataset.dn,1);save();diary(v)}})}
+/* Timer recuperi */
+function $i(i){return document.getElementById(i)}
+function fmt(s){return Math.floor(s/60)+":"+("0"+s%60).slice(-2)}
+function start(sec,name){try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();AC.resume()}catch(e){}T={end:Date.now()+sec*1000,total:sec,name:name,paused:false,done:false,left:sec};$i("tmr").classList.remove("fin");tick()}
+function beep(){if(!AC)return;try{for(var k=0;k<3;k++){var o=AC.createOscillator(),g=AC.createGain();o.frequency.value=880;o.connect(g);g.connect(AC.destination);var s=AC.currentTime+k*.3;g.gain.setValueAtTime(.25,s);g.gain.exponentialRampToValueAtTime(.001,s+.22);o.start(s);o.stop(s+.25)}}catch(e){}}
+function tick(){var el=$i("tmr");if(!T){el.hidden=true;return}el.hidden=false;var left=T.paused?T.left:Math.max(0,Math.ceil((T.end-Date.now())/1000));$i("tt").textContent=fmt(left);$i("tn2").textContent=T.done?"Recupero finito · "+T.name:"Recupero · "+T.name;$i("tp").textContent=T.paused?"▶":"⏸";$i("tg").style.width=Math.min(100,Math.max(0,(1-left/T.total)*100))+"%";if(left===0&&!T.paused&&!T.done){T.done=true;el.classList.add("fin");beep();try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}}}
+function adj(d){if(!T)return;if(T.done){if(d<=0)return;T.end=Date.now()+d*1000;T.total=d;T.done=false;$i("tmr").classList.remove("fin")}else if(T.paused){T.left=Math.max(0,T.left+d);T.total=Math.max(1,T.total+d)}else{T.end+=d*1000;T.total=Math.max(1,T.total+d)}tick()}
+$i("tm1").onclick=function(){adj(-15)};$i("tm2").onclick=function(){adj(15)};$i("tx").onclick=function(){T=null;$i("tmr").classList.remove("fin");tick()};
+$i("tp").onclick=function(){if(!T||T.done)return;if(T.paused){T.end=Date.now()+T.left*1000;T.paused=false}else{T.left=Math.max(0,Math.ceil((T.end-Date.now())/1000));T.paused=true}tick()};
+setInterval(tick,250);document.addEventListener("visibilitychange",tick);
+render();
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
+
+</script>
+</body>
+</html>
